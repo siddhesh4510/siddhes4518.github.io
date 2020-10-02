@@ -42,10 +42,10 @@ text-transform: uppercase;
 }
 .logos img{
     width: 20%;
-     height: 24%;
+    height: 14%;
     padding: 55px 0;
-   margin-left:100;
-   margin-top:150;
+    margin-left:100;
+    margin-top:150;
 }
 .logo{
     float: left;
