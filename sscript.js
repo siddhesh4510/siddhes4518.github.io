@@ -47,7 +47,7 @@ function getdata()
 	    var weight=score[k].w;
           //  alert("name:"+name+"\npolicy number: "+pol_number+"\nmobile: "+mob+"\ndate of birth: "+dob+"\npolicy start: "+dos+"\nPolicy End: "+dom+"\nHeight :"+height+"cm   Weight :"+weight+"kg");
            // alert(i);
-	   var answ="name:"+name+"<br>policy number: "+pol_number+"<br>mobile: "+mob+"<br>date of birth: "+dob+"<br>policy start: "+dos+"<br>Policy End: "+dom+"<br>Height :"+height+"cm   Weight :"+weight+"kg";
+	   var answ="name: "+name+"<br>policy number: "+pol_number+"<br>mobile: "+mob+"<br>date of birth: "+dob+"<br>policy start: "+dos+"<br>Policy End: "+dom+"<br>Height: "+height+"cm     Weight :"+weight+"kg";
 	document.getElementById("show"+i).innerHTML = "<p>"+answ+"</p>"; 
 	document.getElementById("show"+i).style.visibility = "visible";
 	//while(!next){}       
