@@ -5,6 +5,8 @@
   padding: 0;
   box-sizing: border-box;
   user-select: none;
+  margin-top: px;
+  padding: 1px;
 }
 .bg-img{
   background: url('1.jpg');
