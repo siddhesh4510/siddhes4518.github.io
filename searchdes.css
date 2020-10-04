@@ -2,6 +2,7 @@
 
 body{
   background: #f2f2f2;
+  width: 360;
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -23,11 +24,11 @@ body{
   text-transform: uppercase;
 }
 .show {
-  width: 90%;
+  width: 95%;
   border: 3px solid #00B4CC;
   margin-top: 90px;
-  padding: 30px;
-  height: 165px;
+  padding: 0px;
+  height: 259px;
   border-radius: 5px 0 0 5px;
   outline: none;
   color: #478a6a;
@@ -60,7 +61,7 @@ body{
 }
 .wrap1{
 
-width: 70%;
+width: 90%;
 
 position: absolute;
 
@@ -75,7 +76,7 @@ font-size: 20;
 
 
 .but{
-	margin-left: 120px;
+	margin-left: 80px;
 	background: #2A88AD;
 	padding: 8px 30px 8px 20px;
 	border-radius: 5px;
@@ -95,8 +96,10 @@ font-size: 20;
 header{
     background: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url(1.jpg);
     height: 70vh;
+    width: auto;
     -webkit-background-size: cover;
     background-size: cover;
     background-position: center center;
     position: relative;
+}
  
