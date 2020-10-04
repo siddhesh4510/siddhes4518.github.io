@@ -13,7 +13,7 @@ $(document).ready(function(){
 	document.getElementById("h2").innerHTML = "Registered policies";
         
         
-    });
+     });
    
   });
 });
