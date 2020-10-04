@@ -25,12 +25,12 @@
 }
 .content{
   position: absolute;
-  top: 50%;
+  top: 49%;
   left: 50%;
   z-index: 999;
   text-align: center;
   padding: 60px 32px;
-  width: 470px;
+  width: 360px;
   height: 570px;
   transform: translate(-50%,-50%);
   background: rgba(255,255,255,0.04);
