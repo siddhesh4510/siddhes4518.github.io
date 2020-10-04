@@ -23,25 +23,38 @@
  
 </script>
 <script src="hscript.js"></script>
+<script>
 
+    var retref=firebase.database().ref("policy_no");
+    retref.on('value',function(datasnapshot){
+        //alert(datasnapshot.val());
+        var count=0;
+        var score=datasnapshot.val();
+        var i=0;
+        
+        var keys=Object.keys(score);
+        var tot=keys.length;
+	document.getElementById("h1").innerHTML = ""+tot;
+	document.getElementById("h2").innerHTML = "Registered policies";
+         
+    });
+</script>
 <header>
 
     <div class="wrapper">
         <div class="logoh">
             <img src="book.png" alt="">
         </div>
-<ul class="nav-area">
 
-
-<li><a href="search.html">Search</a></li>
-<li><a href="register.html">Register</a></li>
-<li><a href="index.html">Log Out</a></li>
-</ul>
 </div>
 <div class="welcome-text">
    <h1 id="h1"></h1>     <h2 id="h2">
 </h2>
-<a href="#">Click me</a>
+<br>
+<a href="register.html">Register</a><br><br>
+<a href="search.html"> Search </a><br><br>
+<a href="index.html"> logout </a>
+
     </div>
 
 
