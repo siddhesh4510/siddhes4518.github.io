@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Be Mine?</title>
     <style>
         body {
@@ -19,66 +19,87 @@
             position: relative;
         }
 
-        /* Floating Hearts Animation */
-        .heart {
+        /* Floating Hearts & Stars */
+        .heart, .star {
             position: absolute;
-            color: rgba(255, 77, 109, 0.7);
-            font-size: 20px;
             user-select: none;
             pointer-events: none;
-            animation: float 5s linear infinite;
             z-index: 1;
         }
 
+        .heart {
+            color: rgba(255, 77, 109, 0.7);
+            animation: float 5s linear infinite;
+        }
+
+        .star {
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+
         @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
         }
 
         #main-content {
             position: relative;
             z-index: 2;
-            background: rgba(255, 255, 255, 0.3); 
-            padding: 40px;
+            background: rgba(255, 255, 255, 0.4); 
+            padding: 30px;
             border-radius: 20px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-            max-width: 90%;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            max-width: 85%;
         }
 
-        h1 { color: #d00000; font-size: 2.5rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h1 { color: #d00000; font-size: 1.8rem; margin-bottom: 20px; line-height: 1.4; }
 
         .buttons { 
             margin-top: 20px; 
             display: flex; 
+            flex-direction: column; /* Stacked for mobile initially */
             justify-content: center; 
             align-items: center; 
-            gap: 20px;
-            width: 100%;
-            height: 150px;
+            gap: 15px;
+            min-height: 200px;
             position: relative;
         }
 
         button {
             padding: 15px 30px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
             border-radius: 50px; 
             border: none;
-            transition: 0.1s;
+            transition: 0.15s ease-out;
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            touch-action: manipulation; /* Prevents zooming on fast taps */
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; z-index: 10; }
-        #noBtn { background-color: #f8f9fa; color: #888; position: relative; white-space: nowrap; }
+        #yesBtn { background-color: #ff4d6d; color: white; z-index: 10; width: 150px; }
+        #noBtn { background-color: #f8f9fa; color: #888; width: 100px; position: relative; }
+
+        video {
+            border-radius: 15px;
+            max-width: 100%;
+            height: auto;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
 
     <div id="main-content">
-        <img id="header-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ6ZzR5eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJZRUIv41G/giphy.gif" alt="Cute Panda" width="200">
-        <h1>Oyyyyyyyyyyy Cutie , Will you be my Valentine?</h1>
+        <img id="header-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ6ZzR5eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJZRUIv41G/giphy.gif" alt="Cute Panda" width="150">
+        <h1>Oyyyyyyyyyyy Cutie, <br>Will you be my Valentine?</h1>
         <div class="buttons">
             <button id="yesBtn" onclick="celebrate()">YES!</button>
             <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
@@ -86,57 +107,81 @@
     </div>
 
     <script>
+        // Create Background Effects
+        function createElements() {
+            for(let i=0; i<20; i++) {
+                setTimeout(() => {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.width = star.style.height = Math.random() * 3 + 2 + 'px';
+                    star.style.left = Math.random() * 100 + 'vw';
+                    star.style.top = Math.random() * 100 + 'vh';
+                    star.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(star);
+                }, i * 100);
+            }
+        }
+        createElements();
+
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.fontSize = Math.random() * 15 + 10 + 'px';
             document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 5000);
+            setTimeout(() => heart.remove(), 5000);
         }
-        setInterval(createHeart, 300);
+        setInterval(createHeart, 400);
 
         let noCount = 0;
-        let yesSize = 1.2;
+        let yesSize = 1.1;
 
         function moveButton() {
             noCount++;
             const btn = document.getElementById('noBtn');
             const yesBtn = document.getElementById('yesBtn');
 
-            btn.style.position = 'absolute';
+            btn.style.position = 'fixed'; // Fixed works better for mobile "safe area"
 
-            yesSize += 0.4;
+            // 1. Grow Yes Button
+            yesSize += 0.3;
             yesBtn.style.fontSize = yesSize + 'rem';
-            yesBtn.style.padding = (15 + (noCount * 5)) + 'px ' + (30 + (noCount * 10)) + 'px';
+            yesBtn.style.padding = (15 + (noCount * 4)) + 'px ' + (30 + (noCount * 8)) + 'px';
+            yesBtn.style.width = 'auto';
 
+            // 2. Text Change
             if (noCount >= 6) {
                 btn.innerText = "Yess mhana na madam! ❤️";
-                btn.style.padding = "20px 40px";
             }
 
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            // 3. Smart Random Position (Safe Zone)
+            const padding = 20; 
+            const maxX = window.innerWidth - btn.offsetWidth - padding;
+            const maxY = window.innerHeight - btn.offsetHeight - padding;
             
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+            // Random between padding and Max
+            const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+            const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+            
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
         }
 
         function celebrate() {
             document.body.innerHTML = `
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; position: relative; z-index: 2; padding: 20px;">
-                    <h1 style="color: #ff4d6d; font-size: 3rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.1);">Yay! Happy Valentine's Day! बायको ❤️</h1>
-                    <video width="320" height="560" controls autoplay style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; z-index: 2; padding: 20px; box-sizing: border-box;">
+                    <h1 style="color: #ff4d6d; font-size: 2.2rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.1);">Yay! Happy Valentine's Day! बायको ❤️</h1>
+                    <video width="300" controls autoplay playsinline style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
                         <source src="Panda_Video_Creation_and_Delivery.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
-                    <p style="font-size: 1.5rem; color: #d00000; margin-top: 20px; font-weight: bold;">Best decision ever!</p>
+                    <p style="font-size: 1.2rem; color: #d00000; margin-top: 15px; font-weight: bold;">Best decision ever!</p>
                 </div>
             `;
-            setInterval(createHeart, 100); 
-            document.body.style.background = "linear-gradient(180deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)";
+            setInterval(createHeart, 150); 
+            document.body.style.background = "linear-gradient(180deg, #ff9a9e 0%, #fad0c4 100%)";
         }
     </script>
 </body>
