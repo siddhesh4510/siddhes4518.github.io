@@ -12,46 +12,73 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #ffe4e1;
+            background: linear-gradient(180deg, #ffafbd 0%, #ffc3a0 100%); 
             font-family: 'Arial', sans-serif;
             text-align: center;
-            overflow: hidden;
+            overflow: hidden; 
+            position: relative;
         }
-        h1 { color: #d00000; font-size: 3rem; margin-bottom: 20px; }
+
+        /* Floating Hearts Animation */
+        .heart {
+            position: absolute;
+            color: rgba(255, 77, 109, 0.7);
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: float 5s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        #main-content {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.3); 
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            max-width: 90%;
+        }
+
+        h1 { color: #d00000; font-size: 2.5rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+
         .buttons { 
             margin-top: 20px; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            gap: 20px; /* Space between buttons at start */
+            gap: 20px;
+            width: 100%;
+            height: 150px;
+            position: relative;
         }
+
         button {
             padding: 15px 30px;
             font-size: 1.2rem;
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 50px; 
             border: none;
             transition: 0.1s;
             font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        #yesBtn { 
-            background-color: #ff4d6d; 
-            color: white; 
-        }
-        #noBtn { 
-            background-color: #888; 
-            color: white; 
-            /* Notice: No absolute position here initially */
-        }
+
+        #yesBtn { background-color: #ff4d6d; color: white; z-index: 10; }
+        #noBtn { background-color: #f8f9fa; color: #888; position: relative; white-space: nowrap; }
     </style>
 </head>
 <body>
 
     <div id="main-content">
         <img id="header-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ6ZzR5eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/EatwJZRUIv41G/giphy.gif" alt="Cute Panda" width="200">
-        
-        <h1>Will you be my Valentine?</h1>
-
+        <h1>Oyyyyyyyyyyy Cutie , Will you be my Valentine?</h1>
         <div class="buttons">
             <button id="yesBtn" onclick="celebrate()">YES!</button>
             <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
@@ -59,6 +86,18 @@
     </div>
 
     <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+
         let noCount = 0;
         let yesSize = 1.2;
 
@@ -67,21 +106,17 @@
             const btn = document.getElementById('noBtn');
             const yesBtn = document.getElementById('yesBtn');
 
-            // Make it absolute ONLY after the first interaction so it jumps away
             btn.style.position = 'absolute';
 
-            // 1. Grow the Yes button
             yesSize += 0.4;
             yesBtn.style.fontSize = yesSize + 'rem';
             yesBtn.style.padding = (15 + (noCount * 5)) + 'px ' + (30 + (noCount * 10)) + 'px';
 
-            // 2. Change text after 6 attempts
             if (noCount >= 6) {
                 btn.innerText = "Yess mhana na madam! ❤️";
                 btn.style.padding = "20px 40px";
             }
 
-            // 3. Move the button randomly within the screen
             const x = Math.random() * (window.innerWidth - btn.offsetWidth);
             const y = Math.random() * (window.innerHeight - btn.offsetHeight);
             
@@ -91,15 +126,17 @@
 
         function celebrate() {
             document.body.innerHTML = `
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-                    <h1 style="color: #ff4d6d; font-size: 3.5rem;">Yay! Happy Valentine's Day! ❤️</h1>
-                    <video width="320" height="560" controls autoplay>
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; position: relative; z-index: 2; padding: 20px;">
+                    <h1 style="color: #ff4d6d; font-size: 3rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.1);">Yay! Happy Valentine's Day! बायको ❤️</h1>
+                    <video width="320" height="560" controls autoplay style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
                         <source src="Panda_Video_Creation_and_Delivery.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
+                    <p style="font-size: 1.5rem; color: #d00000; margin-top: 20px; font-weight: bold;">Best decision ever!</p>
                 </div>
             `;
-            document.body.style.backgroundColor = "#ffccd5";
+            setInterval(createHeart, 100); 
+            document.body.style.background = "linear-gradient(180deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)";
         }
     </script>
 </body>
