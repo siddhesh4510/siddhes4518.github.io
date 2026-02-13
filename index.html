@@ -19,7 +19,7 @@
             position: relative;
         }
 
-        /* Floating Hearts & Stars */
+        /* Floating Hearts & Twinkling Stars */
         .heart, .star {
             position: absolute;
             user-select: none;
@@ -64,11 +64,10 @@
         .buttons { 
             margin-top: 20px; 
             display: flex; 
-            flex-direction: column; /* Stacked for mobile initially */
             justify-content: center; 
             align-items: center; 
             gap: 15px;
-            min-height: 200px;
+            min-height: 150px;
             position: relative;
         }
 
@@ -78,14 +77,28 @@
             cursor: pointer;
             border-radius: 50px; 
             border: none;
-            transition: 0.15s ease-out;
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            touch-action: manipulation; /* Prevents zooming on fast taps */
+            touch-action: manipulation;
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; z-index: 10; width: 150px; }
-        #noBtn { background-color: #f8f9fa; color: #888; width: 100px; position: relative; }
+        #yesBtn { 
+            background-color: #ff4d6d; 
+            color: white; 
+            z-index: 10; 
+            width: 130px; /* Size remains constant */
+            transition: transform 0.2s;
+        }
+        
+        #yesBtn:active { transform: scale(0.95); }
+
+        #noBtn { 
+            background-color: #f8f9fa; 
+            color: #888; 
+            width: 100px; 
+            position: relative; 
+            transition: 0.15s ease-out;
+        }
 
         video {
             border-radius: 15px;
@@ -107,22 +120,21 @@
     </div>
 
     <script>
-        // Create Background Effects
-        function createElements() {
-            for(let i=0; i<20; i++) {
-                setTimeout(() => {
-                    const star = document.createElement('div');
-                    star.className = 'star';
-                    star.style.width = star.style.height = Math.random() * 3 + 2 + 'px';
-                    star.style.left = Math.random() * 100 + 'vw';
-                    star.style.top = Math.random() * 100 + 'vh';
-                    star.style.animationDelay = Math.random() * 2 + 's';
-                    document.body.appendChild(star);
-                }, i * 100);
+        // Stars background
+        function createStars() {
+            for(let i=0; i<30; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = star.style.height = Math.random() * 3 + 2 + 'px';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(star);
             }
         }
-        createElements();
+        createStars();
 
+        // Heart background
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
@@ -136,32 +148,24 @@
         setInterval(createHeart, 400);
 
         let noCount = 0;
-        let yesSize = 1.1;
 
         function moveButton() {
             noCount++;
             const btn = document.getElementById('noBtn');
-            const yesBtn = document.getElementById('yesBtn');
 
-            btn.style.position = 'fixed'; // Fixed works better for mobile "safe area"
+            btn.style.position = 'fixed';
 
-            // 1. Grow Yes Button
-            yesSize += 0.3;
-            yesBtn.style.fontSize = yesSize + 'rem';
-            yesBtn.style.padding = (15 + (noCount * 4)) + 'px ' + (30 + (noCount * 8)) + 'px';
-            yesBtn.style.width = 'auto';
-
-            // 2. Text Change
+            // Text Change only
             if (noCount >= 2) {
                 btn.innerText = "Yess mhana na madam! ❤️";
+                btn.style.width = 'auto';
             }
 
-            // 3. Smart Random Position (Safe Zone)
-            const padding = 20; 
+            // Safe Zone Logic for mobile
+            const padding = 30; 
             const maxX = window.innerWidth - btn.offsetWidth - padding;
             const maxY = window.innerHeight - btn.offsetHeight - padding;
             
-            // Random between padding and Max
             const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
             const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
             
